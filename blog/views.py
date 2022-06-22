@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
@@ -32,6 +32,7 @@ def post_new(request):
 
 
 @login_required
+@permission_required('auth.view_user')
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -60,6 +61,7 @@ def post_publish(request, pk):
 
 
 @login_required
+@permission_required('auth.view_user')
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
